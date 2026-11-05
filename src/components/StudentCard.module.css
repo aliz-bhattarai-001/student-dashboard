@@ -1,0 +1,37 @@
+.studentCard {
+    border: 1px solid #333;
+    /* margin: 4px; */
+    border-radius: 10px;
+    background-color: hsla(12, 43%, 51%, 0.884);
+    color: black;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    padding: 8px;
+    /* display: inline-block; */
+
+}
+
+.studentName {
+    font-family: 'Times New Roman', Times, serif;
+}
+
+
+
+.statusActive,
+.statusInactive {
+    border-radius: 40px;
+    color: white;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    padding: 8px;
+    display: inline-block;
+}
+
+.statusActive {
+    background-color: green;
+}
+
+.statusInactive {
+    background-color: rgb(165, 1, 1);
+}
+
