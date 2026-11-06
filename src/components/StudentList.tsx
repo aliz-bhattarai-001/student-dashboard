@@ -1,24 +1,18 @@
 import { StudentCard } from "./StudentCard";
 import type { StudentListProps } from "../types/student";
-import styles from "./StudentList.module.css"
+import styles from "./StudentList.module.css";
 
 export function StudentList({ students }: StudentListProps) {
     return (
-        <section className={styles.StudentList}>
-            {
-                students.map(each => (
-                    <StudentCard
-                        key={each.id}
-                        student={each}
-                    />
-                ))
-            }
+        <section className={styles.studentList}>
+            {students.map(each => (
+                <StudentCard
+                    key={each.id}
+                    student={each}
+                />
+            ))}
         </section>
-    )
-
-
-} // function StudentList
-
-
+    );
+} // <StudentList /> React Comp
 
 

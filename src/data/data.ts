@@ -1,5 +1,16 @@
-import type { Student } from "../types/student";
+import type { Student, NavElem } from "../types/student";
 
+export const navElements: NavElem[] = [
+    {
+        name: "Dashboard",
+        link: "#"
+    },
+    {
+        name: "Students",
+        link: "#"
+    }
+
+] // dataHolder navElements
 
 export const students: Student[] = [
     {
@@ -44,5 +55,5 @@ export const students: Student[] = [
         email: "sarah@example.gmail.com",
         academicYear: 2025,
         status: "Active"
-    } 
+    }
 ]; // data students

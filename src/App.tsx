@@ -1,12 +1,13 @@
 import { StudentList } from "./components/StudentList"
-import { students } from "./data/data"
-
+import { students, navElements } from "./data/data"
+import { NavBar } from "./components/Navbar"
 
 export default function App() {
     return (
         <>
             <main>
-                <StudentList  students={students} />
+                <NavBar navElements={navElements} />
+                <StudentList students={students} />
             </main>
         </>
     )

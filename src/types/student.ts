@@ -21,3 +21,13 @@ export interface StudentCardProps {
 export interface StudentListProps {
     students: Student[]
 }
+
+
+export interface NavElem {
+    name: string,
+    link: string
+}
+
+export interface NavBarProps {
+    navElements: NavElem[]
+}
