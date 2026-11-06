@@ -1,4 +1,3 @@
-
 .studentCard {
     background-color: #ffffff;
     color: #1e293b;
@@ -13,8 +12,9 @@
 }
 
 .studentCard:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    transform: translateY(-16px);
+    /* translates y to -16px (16px up) on hover */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
 }
 
 .studentName {
