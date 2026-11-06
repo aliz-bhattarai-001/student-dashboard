@@ -4,7 +4,7 @@
 export interface Student {
     id: string;
     name: string;
-    gender: "Male" | "Female" | "M" | "F" | "Other";
+    gender: "Male" | "Female" | "Other";
     age: number;
     email?: string;
     course: string;
@@ -12,6 +12,16 @@ export interface Student {
     status: "Active" | "Inactive";
 } // interface Student
 
+
+export interface StudentFormData {
+    name: string;
+    age: string;
+    academicYear: string;
+    course: string;
+    email: string;
+    gender: Student["gender"];
+    status: Student["status"];
+}
 
 export interface StudentCardProps {
     student: Student
@@ -36,4 +46,8 @@ export interface NavBarProps {
 export interface SearchBarProps {
     searchTerm: string;
     onSearchChange: (value: string) => void;
+}
+
+export interface AddStudentFormProps {
+    onAddStudent: (student: StudentFormData) => void;
 }

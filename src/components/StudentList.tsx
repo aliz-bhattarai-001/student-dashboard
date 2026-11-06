@@ -5,12 +5,13 @@ import styles from "./StudentList.module.css";
 export function StudentList({ students }: StudentListProps) {
     return (
         <section className={styles.studentList}>
-            {students.map(each => (
-                <StudentCard
-                    key={each.id}
-                    student={each}
-                />
-            ))}
+            {students.length > 0 ? (
+                students.map(each => (
+                    <StudentCard key={each.id} student={each} />
+                ))
+            ) : (
+                <p className={styles.emptyState}>Sorry, No students found.</p>
+            )}
         </section>
     );
 } // <StudentList /> React Comp
