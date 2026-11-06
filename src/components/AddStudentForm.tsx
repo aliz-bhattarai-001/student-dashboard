@@ -16,19 +16,35 @@ export function AddStudentForm({ onAddStudent }: AddStudentFormProps) {
 
     const handleSubmit = (ev: SubmitEvent<HTMLFormElement>) => {
         ev.preventDefault();
-        onAddStudent(formData);
+        const success = onAddStudent(formData);
+        if (success) {
+            setFormData({
+                name: "",
+                age: "",
+                academicYear: "",
+                course: "",
+                email: "",
+                gender: "Other",
+                status: "Active"
+            });
 
-        setFormData({
-            name: "",
-            age: "",
-            academicYear: "",
-            course: "",
-            email: "",
-            gender: "Other",
-            status: "Active"
-        });
+        }
+        else {
+            return;
+        }
+    } // func handleSubmit(s)
+
+
+    // K extends keyof means that now K can have any value among keys of StudentForm data only
+    function handleChange<K extends keyof StudentFormData>(
+        field: K,
+        value: StudentFormData[K]
+    ) {
+        setFormData(previousData => ({
+            ...previousData,
+            [field]: value
+        }));
     }
-
 
     return (
         <>
@@ -44,7 +60,7 @@ export function AddStudentForm({ onAddStudent }: AddStudentFormProps) {
                         type="text"
                         placeholder="Enter Student Name..."
                         value={formData.name}
-                        onChange={(ev) => { setFormData({ ...formData, name: ev.target.value }) }}
+                        onChange={(ev) => { handleChange("name", ev.target.value) }}
                     ></input>
 
                     <label htmlFor="age">Age: </label>
@@ -57,7 +73,7 @@ export function AddStudentForm({ onAddStudent }: AddStudentFormProps) {
                         type="number"
                         placeholder="Student Age..."
                         value={formData.age}
-                        onChange={(ev) => { setFormData({ ...formData, age: ev.target.value }) }}
+                        onChange={(ev) => { handleChange("age", ev.target.value) }}
                     ></input>
 
 
@@ -68,7 +84,7 @@ export function AddStudentForm({ onAddStudent }: AddStudentFormProps) {
                         className={styles.formInput}
                         value={formData.gender}
                         onChange={(ev) => {
-                            setFormData({ ...formData, gender: ev.target.value as StudentFormData["gender"] });
+                            handleChange("gender", ev.target.value as StudentFormData["gender"])
                         }}
                     >
                         <option value="Male">Male</option>
@@ -84,7 +100,7 @@ export function AddStudentForm({ onAddStudent }: AddStudentFormProps) {
                         type="text"
                         placeholder="Enter Course Name..."
                         value={formData.course}
-                        onChange={(ev) => { setFormData({ ...formData, course: ev.target.value }) }}
+                        onChange={(ev) => { handleChange("course", ev.target.value) }}
                     ></input>
 
                     <label htmlFor="academicYear">Academic Year:</label>
@@ -96,10 +112,7 @@ export function AddStudentForm({ onAddStudent }: AddStudentFormProps) {
                         min="1"
                         value={formData.academicYear}
                         onChange={(ev) => {
-                            setFormData({
-                                ...formData,
-                                academicYear: ev.target.value
-                            });
+                            handleChange("academicYear", ev.target.value)
                         }}
                     />
 
@@ -110,10 +123,7 @@ export function AddStudentForm({ onAddStudent }: AddStudentFormProps) {
                         type="email"
                         value={formData.email}
                         onChange={(ev) => {
-                            setFormData({
-                                ...formData,
-                                email: ev.target.value
-                            });
+                            handleChange("email", ev.target.value)
                         }}
                     />
 
@@ -125,10 +135,8 @@ export function AddStudentForm({ onAddStudent }: AddStudentFormProps) {
                         className={styles.formInput}
                         value={formData.status}
                         onChange={(ev) => {
-                            setFormData({
-                                ...formData,
-                                status: ev.target.value as StudentFormData["status"]
-                            });
+
+                            handleChange("status", ev.target.value as StudentFormData["status"])
                         }}
                     >
                         <option value="Active">Active</option>

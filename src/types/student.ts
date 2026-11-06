@@ -49,5 +49,5 @@ export interface SearchBarProps {
 }
 
 export interface AddStudentFormProps {
-    onAddStudent: (student: StudentFormData) => void;
+    onAddStudent: (student: StudentFormData) => boolean;
 }

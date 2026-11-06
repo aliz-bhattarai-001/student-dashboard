@@ -16,11 +16,37 @@ export default function App() {
     );
 
     const addStudentHandler = (formData: StudentFormData) => {
+
+        // Validating input without solely relying on browser validation alone.
+        if (
+            formData.name.trim() === "" ||
+            formData.course.trim() === "" ||
+            formData.age.trim() === "" ||
+            formData.academicYear.trim() === ""
+        ) {
+            alert("Please fill in all required fields.");
+            return false;
+        }
+
+        const age = Number(formData.age);
+        const academicYear = Number(formData.academicYear);
+
+        if (!Number.isInteger(age) || age < 15) {
+            alert("Please enter a valid age.");
+            return false;
+        }
+
+        if (!Number.isInteger(academicYear) || academicYear < 1) {
+            alert("Please enter a valid academic year.");
+            return false;
+        }
+
+
         const newStudent: Student = {
             id: crypto.randomUUID(),
             name: formData.name,
-            age: Number(formData.age),
-            academicYear: Number(formData.academicYear),
+            age,
+            academicYear,
             course: formData.course,
             email: formData.email,
             gender: formData.gender,
@@ -28,6 +54,8 @@ export default function App() {
         };
 
         setStudentList(prevStudentList => [...prevStudentList, newStudent])
+
+        return true;
 
     } // func addStudentHandler()
 
