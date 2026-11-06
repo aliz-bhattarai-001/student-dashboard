@@ -31,3 +31,9 @@ export interface NavElem {
 export interface NavBarProps {
     navElements: NavElem[]
 }
+
+
+export interface SearchBarProps {
+    searchTerm: string;
+    onSearchChange: (value: string) => void;
+}

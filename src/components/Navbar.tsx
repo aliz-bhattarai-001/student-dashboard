@@ -1,50 +1,27 @@
-import type { NavBarProps } from "../types/student"
+import type { NavBarProps } from "../types/student";
+import styles from "./Navbar.module.css";
 
 export function NavBar({ navElements }: NavBarProps) {
-
-    const navBarStyles = {
-        display: "flex",
-        justifyContent: "space-between",
-        alignItems: "center",
-        backgroundColor: "grey",
-        paddingLeft: "25px",
-        paddingRight: "25px",
-        borderRadius: "50px",
-        margin: "10px"
-    }
-
-    const navListStyles = {
-        display: "flex",
-        alignItems: "center",
-        gap: "40px",
-        padding: "0px",
-        margin: "0px"
-
-    }
-
-    const ListStyles = { ...navListStyles }
     return (
-        <>
-            <section style={navBarStyles}>
-                <h1>StudentHub</h1>
-                <nav style={navListStyles}>
-                    <ul style={ListStyles}>
-                        {navElements.map((each) => (
-                            <li key={each.name}>
-                                <a href={each.link}>
-                                    {each.name}
-                                </a>
-                            </li>
-                        ))}
+        <section className={styles.navbar}>
+            <h1 className={styles.logo}>StudentHub</h1>
 
-                    </ul>
+            <nav className={styles.navLinks}>
+                <ul className={styles.navList}>
 
-                    <button type="button">
-                        Toggle Theme
-                    </button>
-                </nav>
+                    {navElements.map(each => (
+                        <li key={each.name}>
+                            <a href={each.link}>
+                                {each.name}
+                            </a>
+                        </li>
+                    ))}
+                </ul>
 
-            </section>
-        </>
-    ) // return NavBar()
-} // func NavBar() : ReactNode
+                <button className={styles.themeButton} type="button">
+                    Toggle Theme
+                </button>
+            </nav>
+        </section>
+    );
+}

@@ -1,37 +1,51 @@
-.studentCard {
-    border: 1px solid #333;
-    /* margin: 4px; */
-    border-radius: 10px;
-    background-color: hsla(12, 43%, 51%, 0.884);
-    color: black;
-    font-family: Arial, Helvetica, sans-serif;
-    font-weight: bold;
-    padding: 8px;
-    /* display: inline-block; */
 
+.studentCard {
+    background-color: #ffffff;
+    color: #1e293b;
+
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+
+    padding: 20px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.studentCard:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
 }
 
 .studentName {
-    font-family: 'Times New Roman', Times, serif;
+    font-size: 20px;
+    font-weight: 700;
+    margin: 0 0 12px;
+    color: #0f172a;
 }
 
-
+.studentCard p {
+    font-size: 14px;
+    color: #060607;
+    margin: 8px 0;
+}
 
 .statusActive,
 .statusInactive {
-    border-radius: 40px;
-    color: white;
-    font-family: Arial, Helvetica, sans-serif;
-    font-weight: bold;
-    padding: 8px;
     display: inline-block;
+    padding: 5px 12px;
+    border-radius: 20px;
+
+    font-size: 12px;
+    font-weight: 700;
 }
 
 .statusActive {
-    background-color: green;
+    background-color: #dcfce7;
+    color: #166534;
 }
 
 .statusInactive {
-    background-color: rgb(165, 1, 1);
+    background-color: #fee2e2;
+    color: #991b1b;
 }
-
