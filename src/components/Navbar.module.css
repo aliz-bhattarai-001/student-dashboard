@@ -89,3 +89,27 @@
         gap: 14px;
     }
 }
+
+
+.navbar {
+    background-color: var(--surface-color);
+    color: var(--text-color);
+    border-bottom: 1px solid var(--border-color);
+    transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+.navLinks a {
+    color: var(--text-color);
+}
+
+.light-theme {
+    --primary-color: #2563eb;
+}
+
+.dark-theme {
+    --primary-color: #60a5fa;
+}
+
+.navLinks a:hover {
+    color: var(--primary-color);
+}

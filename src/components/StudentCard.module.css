@@ -1,16 +1,17 @@
 .studentCard {
-    background-color: #ffffff;
-    color: #1e293b;
+    background-color: var(--surface-color);
+    color: var(--text-color);
+    border: 1px solid var(--border-color);
 
-    border: 1px solid #e2e8f0;
     border-radius: 14px;
-
     padding: 20px;
     box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
 
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    transition:
+        background-color 0.25s ease,
+        color 0.25s ease,
+        border-color 0.25s ease;
 }
-
 .studentCard:hover {
     transform: translateY(-14px);
     /* translates y to -16px (16px up) on hover */
@@ -48,4 +49,12 @@
 .statusInactive {
     background-color: #fee2e2;
     color: #991b1b;
+}
+
+.studentName {
+    color: var(--text-color);
+}
+
+.studentCard p {
+    color: var(--text-color);
 }

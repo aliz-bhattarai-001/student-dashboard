@@ -5,15 +5,18 @@ import { useState } from "react";
 import { SearchBar } from "./components/SearchBar";
 import type { Student, StudentFormData } from "./types/student";
 import { AddStudentForm } from "./components/AddStudentForm";
+import "./App.css"
 
 export default function App() {
 
     const [searchTerm, setSearchTerm] = useState("");
     const [studentList, setStudentList] = useState(students);
+    const [theme, setTheme] = useState<"light" | "dark">("light");
+
 
     const filteredStudents = studentList.filter(student =>
         student.name.toLowerCase().includes(searchTerm.toLowerCase())
-    );
+    ); // dataHolder filteredStudents
 
     const addStudentHandler = (formData: StudentFormData) => {
 
@@ -57,15 +60,31 @@ export default function App() {
 
         return true;
 
-    } // func addStudentHandler()
+    }; // func addStudentHandler()
+
+
+    const deleteStudentHandler = (studentId: string) => {
+        setStudentList(previousStudents =>
+            previousStudents.filter(
+                student => student.id !== studentId
+            )
+        );
+    }; // func deleteStudentHandler()
+
+
+    const handleToggleTheme = () => {
+        setTheme(currentTheme =>
+            currentTheme === "light" ? "dark" : "light"
+        );
+    }; // func toggleTheme()
 
     return (
         <>
-            <main>
-                <NavBar navElements={navElements} />
+            <main className={theme === "dark" ? "dark-theme" : "light-theme"}>
+                <NavBar navElements={navElements} onToggleTheme={handleToggleTheme} />
                 <SearchBar onSearchChange={setSearchTerm} searchTerm={searchTerm} />
                 <AddStudentForm onAddStudent={addStudentHandler} />
-                <StudentList students={filteredStudents} />
+                <StudentList students={filteredStudents} onDeleteStudent={deleteStudentHandler} />
             </main>
         </>
     )

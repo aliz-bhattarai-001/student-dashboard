@@ -24,12 +24,13 @@ export interface StudentFormData {
 }
 
 export interface StudentCardProps {
-    student: Student
-} // interface StudentCardProps
-
+    student: Student;
+    onDeleteStudent: (studentId: string) => void;
+}
 
 export interface StudentListProps {
-    students: Student[]
+    students: Student[];
+    onDeleteStudent: (studentId: string) => void;
 }
 
 
@@ -39,7 +40,8 @@ export interface NavElem {
 }
 
 export interface NavBarProps {
-    navElements: NavElem[]
+    navElements: NavElem[],
+    onToggleTheme: () => void
 }
 
 

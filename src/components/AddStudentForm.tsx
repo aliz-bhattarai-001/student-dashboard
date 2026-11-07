@@ -145,7 +145,7 @@ export function AddStudentForm({ onAddStudent }: AddStudentFormProps) {
 
 
 
-                    <button type="submit">Add Student</button>
+                    <button className={styles.addButton} type="submit">Add Student</button>
                 </form>
             </section>
 

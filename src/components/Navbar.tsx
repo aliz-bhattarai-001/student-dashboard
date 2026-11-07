@@ -1,7 +1,7 @@
 import type { NavBarProps } from "../types/student";
 import styles from "./Navbar.module.css";
 
-export function NavBar({ navElements }: NavBarProps) {
+export function NavBar({ navElements, onToggleTheme }: NavBarProps) {
     return (
         <section className={styles.navbar}>
             <h1 className={styles.logo}>StudentHub</h1>
@@ -18,7 +18,7 @@ export function NavBar({ navElements }: NavBarProps) {
                     ))}
                 </ul>
 
-                <button className={styles.themeButton} type="button">
+                <button className={styles.themeButton} type="button" onClick={onToggleTheme}>
                     Toggle Theme
                 </button>
             </nav>
