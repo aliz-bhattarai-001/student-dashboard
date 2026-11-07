@@ -31,6 +31,27 @@ export function Modal({ children, onClose }: ModalProps) {
     // jsx creates function everytime teh function is invoked/ rerendered
     // thus it means for each onClose recreation this useEffect() is invoked.
 
+    useEffect(() => {
+        // store the previous state
+        const previousOverflowVal = document.body.style.overflow;
+
+        // the setup
+        document.body.style.overflow = "hidden";
+
+        // cleanup on modal exit:
+        return () => {
+            // reset to previous state
+            document.body.style.overflow = previousOverflowVal;
+        }
+    }, []); // empty dependency arr so runs when Modal is mounted or added (initial Mount)
+
+
+    // IF NO DEPENDENCY ARR IS PRESENT THEN IT MEANS : 
+    // the useEffect() is invoked all of the time.
+
+    // IF ANY DEPENDENCY IS INCLUDED IN THE ARR (ARR: NOT EMPTY):
+    // useEffect() is invoked on inital mount as well as when that dependency is recreated/rerendered/changed.
+
     return createPortal(
         <div className={styles.modalBackdrop}
             onClick={onClose}>

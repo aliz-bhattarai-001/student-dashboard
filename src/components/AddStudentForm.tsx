@@ -1,7 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import type { AddStudentFormProps, StudentFormData } from "../types/student"
 import styles from "./AddStudentForm.module.css"
 import type { SubmitEvent } from "react";
+import { useRef } from "react";
+
 
 export function AddStudentForm({ onAddStudent, onCancel }: AddStudentFormProps) {
     const [formData, setFormData] = useState<StudentFormData>({
@@ -46,13 +48,22 @@ export function AddStudentForm({ onAddStudent, onCancel }: AddStudentFormProps) 
         }));
     }
 
+
+    const nameInputRef = useRef<HTMLInputElement>(null);
+    // sets the current foucus on the referred object.
+    useEffect(() => {
+        nameInputRef.current?.focus();
+    }, []);
+
     return (
         <section className={styles.studentForm}>
+            <h2 id="add-student-title">Add Student Details: </h2>
             <form onSubmit={handleSubmit} className={styles.formGrid}>
 
                 <div className={`${styles.formField} ${styles.fullWidth}`}>
                     <label htmlFor="name">Full Name</label>
                     <input
+                        ref={nameInputRef}
                         required
                         id="name"
                         className={styles.formInput}
