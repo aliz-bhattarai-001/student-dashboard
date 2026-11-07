@@ -23,12 +23,12 @@
     font-size: 20px;
     font-weight: 700;
     margin: 0 0 12px;
-    color: #0f172a;
+    color: var(--text-color);
 }
 
 .studentCard p {
     font-size: 14px;
-    color: #060607;
+    color: var(--text-color);
     margin: 8px 0;
 }
 
@@ -53,13 +53,6 @@
     color: var(--inactive-stat-color);
 }
 
-.studentName {
-    color: var(--text-color);
-}
-
-.studentCard p {
-    color: var(--text-color);
-}
 
 .deleteButton {
     background-color: #982929;

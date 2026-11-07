@@ -117,7 +117,7 @@ export default function App() {
                     </button>
                     {/* // conditionalRendering of Modal */}
                     {isAddStudentOpen && (
-                        <Modal>
+                        <Modal onClose={handleCloseAddStudent}>
                             <h2>Add Student Details: </h2>
                             <AddStudentForm
                                 onAddStudent={addStudentHandler}

@@ -60,4 +60,5 @@ export interface AddStudentFormProps {
 
 export interface ModalProps {
     children: ReactNode;
+    onClose: () => void;
 }
