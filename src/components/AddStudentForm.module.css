@@ -1,34 +1,128 @@
+.studentForm {
+    width: 100%;
+}
+
+.formGrid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px 16px;
+}
+
+.formField {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    min-width: 0;
+}
+
+.fullWidth {
+    grid-column: 1 / -1;
+}
+
+.formField label {
+    color: var(--text-color);
+    font-size: 14px;
+    font-weight: 600;
+}
+
 .formInput {
     width: 100%;
     box-sizing: border-box;
-    padding: 12px 16px;
-    border: 1px solid #d1d5db;
-    border-radius: 10px;
-    background-color: #ffffff;
-    color: #1f2937;
-    font-size: 16px;
-    outline: none;
-    transition: background-color 0.2s ease, box-shadow 0.2s ease;
-}
 
-.addButton {
-    background-color: #2563eb;
-    color: white;
-    margin-top: 5px;
-    margin-bottom: 5px;
-}
+    padding: 11px 13px;
 
-.addButton:hover {
-    background-color: #1d4ed8;
-}
+    border: 1px solid var(--border-color);
+    border-radius: 9px;
 
-.formInput {
-    background-color: var(--surface-color);
+    background-color: var(--background-color);
     color: var(--text-color);
-    border: var(--border-color);
+
+    font-family: inherit;
+    font-size: 14px;
+
+    outline: none;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        background-color 0.2s ease;
 }
 
 .formInput:focus {
-    border-color: #6366f1;
-    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
+    border-color: var(--primary-color);
+    box-shadow: var(--focus-shadow);
+}
+
+.formInput::placeholder {
+    color: #94a3b8;
+}
+
+.formActions {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 12px;
+    margin-top: 6px;
+}
+
+.cancelButton {
+    padding: 11px 20px;
+    border: 1px solid var(--border-color);
+    border-radius: 9px;
+
+    background-color: var(--surface-color);
+    color: var(--text-color);
+
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+
+    transition: background-color 0.2s ease;
+}
+
+.cancelButton:hover {
+    background-color: var(--border-color);
+}
+
+.addButton {
+    padding: 11px 20px;
+
+    border: none;
+    border-radius: 9px;
+
+    background-color: var(--primary-color);
+    color: white;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        background-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.addButton:hover {
+    filter: brightness(0.9);
+}
+
+.addButton:active {
+    transform: scale(0.97);
+}
+
+.addButton:focus-visible {
+    outline: 3px solid var(--primary-color);
+    outline-offset: 3px;
+}
+
+/* Responsive layout */
+@media (max-width: 480px) {
+    .formGrid {
+        grid-template-columns: 1fr;
+    }
+
+    .fullWidth {
+        grid-column: auto;
+    }
 }

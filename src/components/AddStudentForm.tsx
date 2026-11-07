@@ -3,7 +3,7 @@ import type { AddStudentFormProps, StudentFormData } from "../types/student"
 import styles from "./AddStudentForm.module.css"
 import type { SubmitEvent } from "react";
 
-export function AddStudentForm({ onAddStudent }: AddStudentFormProps) {
+export function AddStudentForm({ onAddStudent, onCancel }: AddStudentFormProps) {
     const [formData, setFormData] = useState<StudentFormData>({
         name: "",
         age: "",
@@ -47,108 +47,129 @@ export function AddStudentForm({ onAddStudent }: AddStudentFormProps) {
     }
 
     return (
-        <>
-            <section className={styles.studentForm}>
-                <form
-                    onSubmit={handleSubmit}
-                >
-                    <label htmlFor="name">Name: </label>
+        <section className={styles.studentForm}>
+            <form onSubmit={handleSubmit} className={styles.formGrid}>
+
+                <div className={`${styles.formField} ${styles.fullWidth}`}>
+                    <label htmlFor="name">Full Name</label>
                     <input
                         required
                         id="name"
                         className={styles.formInput}
                         type="text"
-                        placeholder="Enter Student Name..."
+                        placeholder="Enter student name..."
                         value={formData.name}
-                        onChange={(ev) => { handleChange("name", ev.target.value) }}
-                    ></input>
+                        onChange={(ev) => handleChange("name", ev.target.value)}
+                    />
+                </div>
 
-                    <label htmlFor="age">Age: </label>
+                <div className={styles.formField}>
+                    <label htmlFor="age">Age</label>
                     <input
                         required
                         id="age"
-
                         min="15"
                         className={styles.formInput}
                         type="number"
-                        placeholder="Student Age..."
+                        placeholder="Student age..."
                         value={formData.age}
-                        onChange={(ev) => { handleChange("age", ev.target.value) }}
-                    ></input>
+                        onChange={(ev) => handleChange("age", ev.target.value)}
+                    />
+                </div>
 
-
-                    <label htmlFor="gender">Gender:</label>
+                <div className={styles.formField}>
+                    <label htmlFor="gender">Gender</label>
                     <select
                         required
                         id="gender"
                         className={styles.formInput}
                         value={formData.gender}
-                        onChange={(ev) => {
+                        onChange={(ev) =>
                             handleChange("gender", ev.target.value as StudentFormData["gender"])
-                        }}
+                        }
                     >
                         <option value="Male">Male</option>
                         <option value="Female">Female</option>
                         <option value="Other">Other</option>
                     </select>
+                </div>
 
-                    <label htmlFor="course">Course: </label>
+                <div className={`${styles.formField} ${styles.fullWidth}`}>
+                    <label htmlFor="course">Course</label>
                     <input
                         required
                         id="course"
                         className={styles.formInput}
                         type="text"
-                        placeholder="Enter Course Name..."
+                        placeholder="Enter course name..."
                         value={formData.course}
-                        onChange={(ev) => { handleChange("course", ev.target.value) }}
-                    ></input>
+                        onChange={(ev) => handleChange("course", ev.target.value)}
+                    />
+                </div>
 
-                    <label htmlFor="academicYear">Academic Year:</label>
+                <div className={styles.formField}>
+                    <label htmlFor="academicYear">Academic Year</label>
                     <input
                         required
                         id="academicYear"
                         className={styles.formInput}
                         type="number"
                         min="1"
+                        placeholder="e.g. 2026"
                         value={formData.academicYear}
-                        onChange={(ev) => {
+                        onChange={(ev) =>
                             handleChange("academicYear", ev.target.value)
-                        }}
+                        }
                     />
+                </div>
 
-                    <label htmlFor="email">Email:</label>
-                    <input
-                        id="email"
-                        className={styles.formInput}
-                        type="email"
-                        value={formData.email}
-                        onChange={(ev) => {
-                            handleChange("email", ev.target.value)
-                        }}
-                    />
-
-
-                    <label htmlFor="status">Status:</label>
+                <div className={styles.formField}>
+                    <label htmlFor="status">Status</label>
                     <select
                         required
                         id="status"
                         className={styles.formInput}
                         value={formData.status}
-                        onChange={(ev) => {
-
+                        onChange={(ev) =>
                             handleChange("status", ev.target.value as StudentFormData["status"])
-                        }}
+                        }
                     >
                         <option value="Active">Active</option>
                         <option value="Inactive">Inactive</option>
                     </select>
+                </div>
 
+                <div className={`${styles.formField} ${styles.fullWidth}`}>
+                    <label htmlFor="email">Email Address</label>
+                    <input
+                        id="email"
+                        className={styles.formInput}
+                        type="email"
+                        placeholder="Enter email address..."
+                        value={formData.email}
+                        onChange={(ev) => handleChange("email", ev.target.value)}
+                    />
+                </div>
 
+                <div className={`${styles.formActions} ${styles.fullWidth}`}>
+                    <button
+                        className={styles.cancelButton}
+                        type="button"
+                        onClick={onCancel}
+                    >
+                        Cancel
+                    </button>
 
-                    <button className={styles.addButton} type="submit">Add Student</button>
-                </form>
-            </section>
+                    <button
+                        className={styles.addButton}
+                        type="submit"
+                    >
+                        Add Student
+                    </button>
+                </div>
 
-        </>
-    ) // return AddStudentForm
+            </form>
+        </section>
+    );
+    // return AddStudentForm
 } // func AddStudentForm() : ReactNode

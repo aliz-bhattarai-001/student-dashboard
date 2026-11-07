@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 
 
 
@@ -50,6 +51,13 @@ export interface SearchBarProps {
     onSearchChange: (value: string) => void;
 }
 
+
 export interface AddStudentFormProps {
-    onAddStudent: (student: StudentFormData) => boolean;
+    onAddStudent: (formData: StudentFormData) => boolean;
+    onCancel: () => void;
+}
+
+
+export interface ModalProps {
+    children: ReactNode;
 }

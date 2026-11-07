@@ -1,17 +1,36 @@
 import { StudentList } from "./components/StudentList"
 import { students, navElements } from "./data/data"
 import { NavBar } from "./components/Navbar"
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { SearchBar } from "./components/SearchBar";
 import type { Student, StudentFormData } from "./types/student";
 import { AddStudentForm } from "./components/AddStudentForm";
 import "./App.css"
 
+import { Modal } from "./components/Modal/Modal";
+
 export default function App() {
 
     const [searchTerm, setSearchTerm] = useState("");
     const [studentList, setStudentList] = useState(students);
-    const [theme, setTheme] = useState<"light" | "dark">("light");
+
+    // localStorage is the browsers storage that allows user to save settings. using keyvalue pairs
+    // set, get, remove + Item or clear (to clear all)
+    const [theme, setTheme] = useState<"light" | "dark">(() => {
+        const savedTheme = localStorage.getItem("student-dashboard-theme"); //getting dashboard theme using the key
+
+        return savedTheme === "dark" ? "dark" : "light"; // verifying again which theme to apply initially.
+    });
+
+    const [isAddStudentOpen, setIsAddStudentOpen] = useState(false);
+
+    const handleOpenAddStudent = () => {
+        setIsAddStudentOpen(true);
+    };
+
+    const handleCloseAddStudent = () => {
+        setIsAddStudentOpen(false);
+    };
 
 
     const filteredStudents = studentList.filter(student =>
@@ -73,19 +92,42 @@ export default function App() {
 
 
     const handleToggleTheme = () => {
-        setTheme(currentTheme =>
-            currentTheme === "light" ? "dark" : "light"
-        );
+        const nextTheme = theme === "light" ? "dark" : "light";
+
+        setTheme(nextTheme);
+
+        localStorage.setItem("student-dashboard-theme", nextTheme);
     }; // func toggleTheme()
+
+
+    useEffect(() => {
+        document.documentElement.className =
+            theme === "dark" ? "dark-theme" : "light-theme";
+    }, [theme]);
+
 
     return (
         <>
-            <main className={theme === "dark" ? "dark-theme" : "light-theme"}>
-                <NavBar navElements={navElements} onToggleTheme={handleToggleTheme} />
-                <SearchBar onSearchChange={setSearchTerm} searchTerm={searchTerm} />
-                <AddStudentForm onAddStudent={addStudentHandler} />
-                <StudentList students={filteredStudents} onDeleteStudent={deleteStudentHandler} />
-            </main>
+            <div className={theme === "dark" ? "dark-theme" : "light-theme"}>
+                <main >
+                    <NavBar navElements={navElements} onToggleTheme={handleToggleTheme} />
+                    <SearchBar onSearchChange={setSearchTerm} searchTerm={searchTerm} />
+                    <button onClick={handleOpenAddStudent}>
+                        + Add Student
+                    </button>
+                    {/* // conditionalRendering of Modal */}
+                    {isAddStudentOpen && (
+                        <Modal>
+                            <h2>Add Student Details: </h2>
+                            <AddStudentForm
+                                onAddStudent={addStudentHandler}
+                                onCancel={handleCloseAddStudent}
+                            />
+                        </Modal>
+                    )}
+                    <StudentList students={filteredStudents} onDeleteStudent={deleteStudentHandler} />
+                </main>
+            </div>
         </>
     )
 }

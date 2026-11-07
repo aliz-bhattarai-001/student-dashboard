@@ -27,11 +27,3 @@
     font-size: 16px;
 }
 
-.deleteButton {
-    background-color: #dc2626;
-    color: white;
-}
-
-.deleteButton:hover {
-    background-color: #b91c1c;
-}
