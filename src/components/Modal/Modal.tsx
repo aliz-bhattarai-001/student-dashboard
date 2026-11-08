@@ -2,9 +2,12 @@ import { createPortal } from "react-dom";
 import type { ModalProps } from "../../types/student";
 import styles from "./Modal.module.css";
 
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 
 export function Modal({ children, onClose }: ModalProps) {
+
+    // to store a ref to modal container
+    const modalContentRef = useRef<HTMLDivElement>(null);
 
     // to exit the modal when esc is pressed.
     useEffect(() => {
@@ -13,6 +16,39 @@ export function Modal({ children, onClose }: ModalProps) {
         function handleKeyDown(event: KeyboardEvent) {
             if (event.key === "Escape") {
                 onClose();
+            }
+
+            // handles focus shifting
+            if (event.key === "Tab") {
+                // findind all focusable elements within the modalContainerRef. 
+                const focusableElements =
+                    modalContentRef.current?.querySelectorAll<HTMLElement>(
+                        'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled])'
+                    );
+
+                // a[href] -> link containing elements
+                // :not[disabled] -> meaning all enabled or active elements.
+                // querySelectorAll returns all matching elements in DOM order.
+
+                if (!focusableElements?.length) return; // if no focusable elements found : return
+
+
+                const firstElement = focusableElements[0];
+                const lastElement = focusableElements[focusableElements.length - 1];
+
+                // if shift + tab is clicked and on first Element directly set focus on last
+                if (event.shiftKey && document.activeElement === firstElement) {
+                    event.preventDefault();
+                    lastElement.focus();
+                } else if (!event.shiftKey && document.activeElement === lastElement) {
+                    // if not shift+Tab but soley +Tab then move to the first element. 
+                    // meaning the tab will revolve in cycle: Last->First
+                    // the rest of the tab focus is auto handled. 
+                    // we need only to handle tab focus shift from last
+                    //  to ensure the tab focus doesn't leave the modal
+                    event.preventDefault();
+                    firstElement.focus();
+                }
             }
         } // handler handleKeyDown() func
 
@@ -57,10 +93,15 @@ export function Modal({ children, onClose }: ModalProps) {
             onClick={onClose}>
             {/* Close event handled when clicked on Backdrop.*/}
             <div className={styles.modalContent}
+                ref={modalContentRef}
+                role="dialog"
+                aria-modal="true"
+                aria-labelledby="add-student-title"
                 // .stopPropagation prevents clicks inside the modal from reaching backdrop.
                 onClick={(event) => event.stopPropagation()}>
 
                 {children}
+
             </div>
         </div>,
         document.body

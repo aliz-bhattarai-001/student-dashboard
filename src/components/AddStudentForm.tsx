@@ -30,6 +30,7 @@ export function AddStudentForm({ onAddStudent, onCancel }: AddStudentFormProps) 
                 status: "Active"
             });
 
+            onCancel(); // to restore focus
         }
         else {
             return;

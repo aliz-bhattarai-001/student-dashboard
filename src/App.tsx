@@ -1,7 +1,7 @@
 import { StudentList } from "./components/StudentList"
 import { students, navElements } from "./data/data"
 import { NavBar } from "./components/Navbar"
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { SearchBar } from "./components/SearchBar";
 import type { Student, StudentFormData } from "./types/student";
 import { AddStudentForm } from "./components/AddStudentForm";
@@ -31,6 +31,22 @@ export default function App() {
     const handleCloseAddStudent = () => {
         setIsAddStudentOpen(false);
     };
+
+    // we useRef here because useState would've invoked an unnecessary render.
+    // we want to store teh ref to the mutable object (.current)
+    // so useRef was the appropriate choice.
+    const wasModalOpen = useRef(false);
+
+
+    useEffect(() => {
+        // if modal was previously (recently ) open and now isAddStudentOpen  = false
+        // meaning it is now closed
+        if (wasModalOpen.current && !isAddStudentOpen) {
+            addStudentButtonRef.current?.focus(); // set focus on the add student button
+        };
+
+        wasModalOpen.current = isAddStudentOpen; // store the latest value of isAddstudentOpen
+    }, [isAddStudentOpen]) // call whenever isAddStudentOpen changes
 
 
     const filteredStudents = studentList.filter(student =>
@@ -105,6 +121,8 @@ export default function App() {
             theme === "dark" ? "dark-theme" : "light-theme";
     }, [theme]);
 
+    const addStudentButtonRef = useRef<HTMLButtonElement>(null); // to keep a reference to the button that opened the form
+    // to return focus to the button when escaped using tab navigation.
 
     return (
         <>
@@ -112,7 +130,7 @@ export default function App() {
                 <main >
                     <NavBar navElements={navElements} onToggleTheme={handleToggleTheme} />
                     <SearchBar onSearchChange={setSearchTerm} searchTerm={searchTerm} />
-                    <button onClick={handleOpenAddStudent}>
+                    <button ref={addStudentButtonRef} onClick={handleOpenAddStudent}>
                         + Add Student
                     </button>
                     {/* // conditionalRendering of Modal */}
