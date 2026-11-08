@@ -14,7 +14,7 @@ export function StudentCard({ student, onDeleteStudent }: StudentCardProps) {
             {/* or we can also use: {student.email ? <p>{student.email}</p> : null} */}
             {student.email && <p>{student.email}</p>}
             <p className={student.status === "Active" ? styles.statusActive : styles.statusInactive}>{student.status}</p>
-            <button className={styles.deleteButton} type="button" onClick={() => onDeleteStudent(student.id)}>
+            <button className={styles.deleteButton} type="button" onClick={() => onDeleteStudent(student)}>
                 Delete
             </button>
         </article>

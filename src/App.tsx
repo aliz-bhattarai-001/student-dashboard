@@ -8,11 +8,12 @@ import { AddStudentForm } from "./components/AddStudentForm";
 import "./App.css"
 
 import { Modal } from "./components/Modal/Modal";
-
+import { ConfirmDeleteModal } from "./components/ConfirmDeleteModal";
 export default function App() {
 
     const [searchTerm, setSearchTerm] = useState("");
     const [studentList, setStudentList] = useState(students);
+    const [studentToDelete, setStudentToDelete] = useState<Student | null>(null);
 
     // localStorage is the browsers storage that allows user to save settings. using keyvalue pairs
     // set, get, remove + Item or clear (to clear all)
@@ -106,6 +107,29 @@ export default function App() {
         );
     }; // func deleteStudentHandler()
 
+    const handleDeleteRequest = (student: Student) => {
+        setStudentToDelete(student);
+    }; // func handleDeleteRequest()
+
+    const handleCancelDelete = () => {
+        setStudentToDelete(null);
+    }; // func handleCancelDelete()
+
+    const handleConfirmDelete = () => {
+
+
+        // if no student exists return (in case of null )
+        if (!studentToDelete) {
+            return;
+        }
+
+        // pass the id to handler
+        deleteStudentHandler(studentToDelete.id);
+
+        setStudentToDelete(null); // clear the setStudentToDelete
+    }; // func handleConfirmDelete()
+
+
 
     const handleToggleTheme = () => {
         const nextTheme = theme === "light" ? "dark" : "light";
@@ -142,7 +166,15 @@ export default function App() {
                             />
                         </Modal>
                     )}
-                    <StudentList students={filteredStudents} onDeleteStudent={deleteStudentHandler} />
+
+                    {studentToDelete && (
+                        <ConfirmDeleteModal
+                            student={studentToDelete}
+                            onConfirm={handleConfirmDelete}
+                            onCancel={handleCancelDelete}
+                        />
+                    )}
+                    <StudentList students={filteredStudents} onDeleteStudent={handleDeleteRequest} />
                 </main>
             </div>
         </>

@@ -72,3 +72,8 @@ main {
     --inactive-stat-background-color: #7f1d1d;
     --inactive-stat-color: #fecaca;
 }
+
+button:focus-visible {
+    outline: 3px solid var(--primary-color);
+    outline-offset: 3px;
+}

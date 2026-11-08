@@ -26,12 +26,12 @@ export interface StudentFormData {
 
 export interface StudentCardProps {
     student: Student;
-    onDeleteStudent: (studentId: string) => void;
+    onDeleteStudent: (student: Student) => void;
 }
 
 export interface StudentListProps {
     students: Student[];
-    onDeleteStudent: (studentId: string) => void;
+    onDeleteStudent: (student: Student) => void;
 }
 
 
@@ -62,4 +62,11 @@ export interface ModalProps {
     children: ReactNode;
     onClose: () => void;
     ariaLabelledBy?: string;
+}
+
+
+export interface ConfirmDeleteModalProps {
+    student: Student;
+    onConfirm: () => void;
+    onCancel: () => void;
 }
