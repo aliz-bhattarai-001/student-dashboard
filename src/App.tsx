@@ -39,6 +39,8 @@ export default function App() {
     const wasModalOpen = useRef(false);
 
 
+
+
     useEffect(() => {
         // if modal was previously (recently ) open and now isAddStudentOpen  = false
         // meaning it is now closed
@@ -49,6 +51,25 @@ export default function App() {
         wasModalOpen.current = isAddStudentOpen; // store the latest value of isAddstudentOpen
     }, [isAddStudentOpen]) // call whenever isAddStudentOpen changes
 
+
+    const wasDeleteModalOpen = useRef(false);
+
+    useEffect(() => {
+
+        // if the modal was lastly opened and now studentToDelete is null (some action was done: cancel or delete)
+        if (wasDeleteModalOpen.current && studentToDelete === null) {
+
+            // isConnected gives wethere the element is actually attached to the document or not
+            if (deleteTriggerRef.current?.isConnected) {
+                deleteTriggerRef.current.focus(); // if still present (meaning cancel pressed)
+                // set the focus there
+            }
+            // else do nothing (confirmed delte)
+        }
+
+        wasDeleteModalOpen.current = studentToDelete !== null; //if studentToDelete !== null returns false -> was not recently open
+        // if returns true then it was recently opened. 
+    }, [studentToDelete]);
 
     const filteredStudents = studentList.filter(student =>
         student.name.toLowerCase().includes(searchTerm.toLowerCase())
@@ -107,9 +128,11 @@ export default function App() {
         );
     }; // func deleteStudentHandler()
 
-    const handleDeleteRequest = (student: Student) => {
+    const handleDeleteRequest = (student: Student, triggerElement: HTMLButtonElement) => {
+        deleteTriggerRef.current = triggerElement;
         setStudentToDelete(student);
     }; // func handleDeleteRequest()
+
 
     const handleCancelDelete = () => {
         setStudentToDelete(null);
@@ -147,6 +170,11 @@ export default function App() {
 
     const addStudentButtonRef = useRef<HTMLButtonElement>(null); // to keep a reference to the button that opened the form
     // to return focus to the button when escaped using tab navigation.
+
+    const deleteTriggerRef = useRef<HTMLButtonElement | null>(null);
+
+
+
 
     return (
         <>

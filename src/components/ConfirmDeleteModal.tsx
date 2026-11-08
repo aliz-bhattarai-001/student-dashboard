@@ -1,12 +1,24 @@
 import type { ConfirmDeleteModalProps } from "../types/student";
 import { Modal } from "./Modal/Modal";
 import styles from "./DeleteModal.module.css"
+import { useEffect, useRef } from "react";
 
 export function ConfirmDeleteModal({
     student,
     onConfirm,
     onCancel
 }: ConfirmDeleteModalProps) {
+
+    const cancelButtonRef = useRef<HTMLButtonElement>(null);
+
+    useEffect(() => {
+
+        // if student is null (no selected) this doesn't run at all.
+        // even during initial load since student is null it doesn't execute the code below.
+        if (student) {
+            cancelButtonRef.current?.focus();
+        }
+    }, [student]); // whenever student changes (aka Student to delete changes value)
 
     return (
         <Modal
@@ -32,6 +44,7 @@ export function ConfirmDeleteModal({
 
                 <div className={styles.actions}>
                     <button
+                        ref={cancelButtonRef}
                         className={styles.cancelButton}
                         type="button"
                         onClick={onCancel} >

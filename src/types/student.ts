@@ -26,12 +26,12 @@ export interface StudentFormData {
 
 export interface StudentCardProps {
     student: Student;
-    onDeleteStudent: (student: Student) => void;
+    onDeleteStudent: (student: Student, triggerElement: HTMLButtonElement) => void;
 }
 
 export interface StudentListProps {
     students: Student[];
-    onDeleteStudent: (student: Student) => void;
+    onDeleteStudent: (student: Student, triggerElement: HTMLButtonElement) => void;
 }
 
 
