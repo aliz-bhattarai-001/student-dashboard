@@ -135,7 +135,7 @@ export default function App() {
                     </button>
                     {/* // conditionalRendering of Modal */}
                     {isAddStudentOpen && (
-                        <Modal onClose={handleCloseAddStudent} aria-labelledby="add-student-title">
+                        <Modal onClose={handleCloseAddStudent} ariaLabelledBy="add-student-title">
                             <AddStudentForm
                                 onAddStudent={addStudentHandler}
                                 onCancel={handleCloseAddStudent}

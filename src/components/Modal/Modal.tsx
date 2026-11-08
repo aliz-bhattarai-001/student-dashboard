@@ -4,7 +4,7 @@ import styles from "./Modal.module.css";
 
 import { useEffect, useRef } from "react";
 
-export function Modal({ children, onClose }: ModalProps) {
+export function Modal({ children, onClose, ariaLabelledBy }: ModalProps) {
 
     // to store a ref to modal container
     const modalContentRef = useRef<HTMLDivElement>(null);
@@ -23,18 +23,62 @@ export function Modal({ children, onClose }: ModalProps) {
                 // findind all focusable elements within the modalContainerRef. 
                 const focusableElements =
                     modalContentRef.current?.querySelectorAll<HTMLElement>(
-                        'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled])'
+                        'a[href], button:not([disabled]), input:not([disabled]):not([type="hidden"]), select:not([disabled]), [tabindex]:not([tabindex="-1"]), textarea:not([disabled])'
                     );
 
                 // a[href] -> link containing elements
-                // :not[disabled] -> meaning all enabled or active elements.
+                // :not([disabled]) -> meaning all enabled or active elements.
                 // querySelectorAll returns all matching elements in DOM order.
+                // :not([type="hidden"]) -> excludes hidden sections
+                // [tabindex]:not([tabindex="-1"]) -> excludes things that have tab navigation blocking
 
-                if (!focusableElements?.length) return; // if no focusable elements found : return
+
+                // even after so much of filtering
+                // We still don't want display: none (invisible elements) to be in focusableElements.
+                // so we filter using getClientRect()
+                // We can use getClientRects() to check whether an element has a rendered layout box.
+
+                // focusableElemnts ?? [] : If focusableElements exists use it 
+                // else use an empty array. 
+                // since Array.from() expects an array but modelContentRef.current? may return undefined.
+                const visibleFocusableElements = Array.from(focusableElements ?? []).filter(
+                    (element) => element.getClientRects().length > 0 // if has a rendered layout then it's visible.
+                );
+
+                // EG: const elements = undefined ?? []; 
+                // here  elements will contain an empty array.
 
 
-                const firstElement = focusableElements[0];
-                const lastElement = focusableElements[focusableElements.length - 1];
+                // Nullish coalescing (??) : checks hecks whether the value on the left is specifically null or undefined.
+                // so it works as a ternary operator of sorts but specifically for nullish values.
+
+                // we can use this to provide default values for missing properties like :
+                // const username = user.name ?? "Guest";
+
+                // while using ternary operator for decision making based on condition.
+                // TRICK QUESTION: const count = 0
+                // const elem = count ?? 10;
+                // elem will be 0 since 0 is "FALSY" NOT "NULLISH" (NULLISH: null or Undefined only)
+
+                if (!visibleFocusableElements?.length) return; // if no focusable elements found : return
+
+                // use the final filtered visibleFocusElements
+                const firstElement = visibleFocusableElements[0];
+                const lastElement = visibleFocusableElements[visibleFocusableElements.length - 1];
+
+
+                // if somehow the focus wanders outside the modal elements.
+                // bring it back immediately to the first focusable elemnt.
+                // Check whether the currently focused element is inside the modal.
+                if (!modalContentRef.current?.contains(document.activeElement)) {
+                    // If the modal does NOT contain the currently focused element
+                    // bring focus back to the first focusable element
+
+                    // if multiple modals or elements requiring focus are present at same level.
+                    event.preventDefault(); // prevents default browser behavior (overrides it i'd say)
+                    firstElement.focus(); // if the model
+                    return;
+                }
 
                 // if shift + tab is clicked and on first Element directly set focus on last
                 if (event.shiftKey && document.activeElement === firstElement) {
@@ -96,7 +140,7 @@ export function Modal({ children, onClose }: ModalProps) {
                 ref={modalContentRef}
                 role="dialog"
                 aria-modal="true"
-                aria-labelledby="add-student-title"
+                aria-labelledby={ariaLabelledBy}
                 // .stopPropagation prevents clicks inside the modal from reaching backdrop.
                 onClick={(event) => event.stopPropagation()}>
 
