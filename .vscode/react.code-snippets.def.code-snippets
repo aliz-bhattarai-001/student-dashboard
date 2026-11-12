@@ -1,0 +1,18 @@
+{
+	"React Function Component": {
+		"prefix": "!def",
+		"body": [
+			"export function ${1:FuncName}() {",
+			"$2",
+			"    return (",
+			"        <>",
+			"            $3",
+			"",
+			"        </>",
+			"    ) // return ${1:FuncName}",
+			"} // func ${1:FuncName}() : ReactNode",
+			"$0"
+		],
+		"description": "Creates a React function component with a fragment"
+	},
+}
